@@ -26,7 +26,7 @@
 // Follow up: Could you solve it without converting the integer to a string ?
 
 const isPalindrome = x => {
-
+    return x.toString().split('').reverse().join('') === x.toString();
 };
 
 console.log(isPalindrome(121));
