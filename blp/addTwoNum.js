@@ -20,10 +20,10 @@
 // It is guaranteed that the list represents a number that does not have leading zeros.
 
 
-function ListNode(val, next) {
-    this.val = (val===undefined ? 0 : val)
-    this.next = (next===undefined ? null : next)
-}
+// function ListNode(val, next) {
+//     this.val = (val===undefined ? 0 : val)
+//     this.next = (next===undefined ? null : next)
+// }
  
 
 const addTwoNumbers = (l1, l2) => {
@@ -43,7 +43,7 @@ const addTwoNumbers = (l1, l2) => {
 
         tail.next = new ListNode(value);
         tail = tail.next;
-        
+
         if (curr1 !== null) curr1 = curr1.next;
         if (curr2 !== null) curr2 = curr2.next;
     }
