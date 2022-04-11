@@ -21,26 +21,23 @@
 // s consists of English letters, digits, symbols and spaces.
 
 var lengthOfLongestSubstring = function (s) { // 'tmmzuxt'
-    let longest = 0;
-    const charSet = new Set();
+    let maxLength = 0;
+    let charSet = new Set();
 
-    let i = 0;
-    let j = 0;
+    let start = 0;
+    let end = 0;
 
-    while (j < s.length) {
-
-        while (charSet.has(s[j])) {
-            charSet.delete(s[i]);
-            i += 1;
+    while (end < s.length) {
+        while (charSet.has(s[end])) {
+            charSet.delete(s[start]);
+            start += 1;
         }
-
-        charSet.add(s[j]);
-        longest = Math.max(longest, j - i + 1)
-        j += 1;
+        maxLength = Math.max(maxLength, end - start + 1);
+        charSet.add(s[end]);
+        end += 1;
     }
 
-
-    return longest;
+    return maxLength
 };
 
 
