@@ -91,6 +91,8 @@
 // shortestPath(edges, 'm', 's'); // -> 6
 
 
+// if we use queue and BFS, we are bound to find the shortest path;
+
 const shortestPath = (edges, nodeA, nodeB) => {
     const graph = makeGraph(edges);
     const queue = [{ node: nodeA, dist: 0 }];
