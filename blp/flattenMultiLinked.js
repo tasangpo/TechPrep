@@ -45,7 +45,7 @@
 
 var flatten = function (head) {
     const stack = [];
-    let curr = head; 3
+    let curr = head; 
 
     while (curr !== null) {
         if (curr.next === null && stack.length) {
