@@ -20,18 +20,19 @@ var knightDialer = function(n) {
 
 const countTotal = (n, deltas, r, c, remain, memo) => {
     const pos = r + ',' + c + ',' + remain;
+    
     if (remain === 0) return 1;
     
     if (pos in memo) return memo[pos];
     
     let count = 0;
-    
+    const mod = (10**9) + 7;
     for (let [deltaRow, deltaCol] of deltas) {
         if (!isValid(r + deltaRow, c + deltaCol)) {
             continue;
         }
         
-        count += countTotal(n, deltas, r + deltaRow, c + deltaCol, remain - 1, memo) % ((10 ** 9) +7);
+        count += countTotal(n, deltas, r + deltaRow, c + deltaCol, remain - 1, memo) % mod;
     }
     
     memo[pos] = count;
