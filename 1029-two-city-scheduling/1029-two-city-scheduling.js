@@ -3,14 +3,13 @@
  * @return {number}
  */
 var twoCitySchedCost = function(costs) {
-    costs.sort((a, b) => (a[0] - a[1]) - (b[0] - b[1]));
+    costs.sort((a, b) => (a[0]-a[1]) - (b[0]-b[1]) );
+    const mid = Math.floor(costs.length / 2);
+    let cost = 0;
     
-    let total = 0;
-    const mid = costs.length / 2;
-    let i = 0;
-    while (i < mid) {
-        total += costs[i][0] + costs[i + mid][1];
-        i += 1;
+    for (let i = 0; i < mid; i++) {
+        cost += costs[i][0] + costs[mid + i][1]
     }
-    return total;
+    
+    return cost;
 };
