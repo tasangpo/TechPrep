@@ -14,27 +14,28 @@
  */
 var flatten = function(head) {
     if (head === null) return null
-    const stack = [ head ];
-    let prev = head;
+    const stack = [head];
+    let previous = head;
+    
     while (stack.length) {
-        const curr = stack.pop();
-        if (curr.next) stack.push(curr.next);
-        if (curr.child) stack.push(curr.child);
+        const current = stack.pop();
+        if (current.next) stack.push(current.next);
+        if (current.child) stack.push(current.child);
         
-        if (curr.child) {
-            curr.next = curr.child;
-            curr.next.prev = curr;
-            curr.child = null;
-        }
-        if (prev.next === null) {
-            prev.next = curr;
-            curr.prev = prev;
+        if (current.child) {
+            current.next = current.child;
+            current.next.prev = current;
+            current.child = null;
         }
         
-        prev = curr;   
+        if (previous.next === null) {
+            previous.next = current;
+            current.prev = previous;
+        }
+        
+        
+        previous = current;
     }
     
-    
     return head;
-    
 };
