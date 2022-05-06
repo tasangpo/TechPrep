@@ -15,21 +15,20 @@
 var flatten = function(head) {
     let curr = head;
     const stack = [];
-    
     while (curr !== null) {
         if (curr.next === null && stack.length) {
-            const node = stack.pop();
-            curr.next = node;
-            curr.next.prev = curr;
+            curr.next = stack.pop();
+            if (curr.next) curr.next.prev = curr;
         }
         
         if (curr.child) {
-            if (curr.next) stack.push(curr.next);
+            stack.push(curr.next);
             curr.next = curr.child;
             curr.next.prev = curr;
             curr.child = null;
         }
         curr = curr.next;
     }
+    
     return head;
 };
