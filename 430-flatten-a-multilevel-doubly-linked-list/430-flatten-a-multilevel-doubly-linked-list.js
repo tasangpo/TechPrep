@@ -18,11 +18,11 @@ var flatten = function(head) {
     while (curr !== null) {
         if (curr.next === null && stack.length) {
             curr.next = stack.pop();
-            if (curr.next) curr.next.prev = curr;
+            curr.next.prev = curr;
         }
         
         if (curr.child) {
-            stack.push(curr.next);
+            if (curr.next) stack.push(curr.next);
             curr.next = curr.child;
             curr.next.prev = curr;
             curr.child = null;
