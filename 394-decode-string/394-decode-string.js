@@ -3,17 +3,17 @@
  * @return {string}
  */
 var decodeString = function(s) {
-    const stack = [];               //  ['3']
-    const numbers = '0123456789'
+    const stack = []; 
+    const numbers = '0123456789';
     
-    for (const char of s) {
+    for (let char of s) {
         if (char !== ']') {
             stack.push(char);
             continue;
         }
         
-        let str = '';               //'a'
-        let ele = stack.pop()
+        let str = '';
+        let ele = stack.pop();
         while (ele !== '[') {
             str = ele + str;
             ele = stack.pop();
@@ -25,10 +25,10 @@ var decodeString = function(s) {
             count = num + count;
             num = stack.pop();
         }
-        stack.push(num);
         
+        stack.push(num);
         stack.push(str.repeat(count));
-    }
+    };
     
     return stack.join('');
 };
