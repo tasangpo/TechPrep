@@ -7,7 +7,7 @@ var knightDialer = function(n) {
     let count = 0;
     for (let r = 0; r < 4; r++) {
         for (let c = 0; c < 3; c++) {
-            if (validPos(r, c)) count +=  checkMove(n, r, c, n-1)
+            if (validPos(r, c)) count +=  checkMove(n, r, c, n-1, memo={})
         }
     }
     return count % mod;
