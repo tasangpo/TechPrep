@@ -3,26 +3,19 @@
  * @return {number[][]}
  */
 var allPathsSourceTarget = function(graph) {
-    
     const paths = [];
-    
-    traverse(0, graph, paths, []);
-    
+    traverse(0, graph, paths, [] )
     return paths;
-    
 };
 
-
-const traverse = (vert, graph, paths, path) => {
+const traverse = (i, graph, paths, path) => {
+    path.push(i);
     
-    path.push(vert);
-    
-    if(vert === graph.length -1){
+    if (i === graph.length - 1) {
         paths.push(path)
-        return;
+        return
     }
-    
-    graph[vert].forEach( (v) =>{
-        traverse(v, graph, paths, [...path])
-    })
+    for (let neighbor of graph[i]) {
+        traverse(neighbor, graph, paths, [...path])
+    }
 }
