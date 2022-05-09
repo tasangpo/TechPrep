@@ -1,30 +1,32 @@
 
-class RandomizedSet {
-    constructor() {
-        this.nums = [];
-        this.idxMap = new Map();
-    }
-    insert(val) {
-        if(this.idxMap.has(val)) {
-            return false;
-        }
-        this.nums.push(val);
-        this.idxMap.set(val, this.nums.length - 1)
-        return true;
-    }
-    remove(val) {
-        if(!this.idxMap.has(val)) {
-            return false;
-        }
-        const valIdx = this.idxMap.get(val);
-        [this.nums[valIdx], this.nums[this.nums.length - 1]] = [this.nums[this.nums.length - 1], this.nums[valIdx]];
-        this.nums.pop();
-        this.idxMap.set(this.nums[valIdx], valIdx);
-        this.idxMap.delete(val);
-        return true;
-    }
-    getRandom() {
-        const randomIdx = Math.floor(Math.random() * this.nums.length);
-        return this.nums[randomIdx];
-    }
-}
+var RandomizedSet = function() {
+    this.map = new Map();
+    this.array = [];
+};
+
+RandomizedSet.prototype.insert = function(val) {
+    if (this.map.has(val)) return false;
+    this.array.push(val);
+    this.map.set(val, this.array.length - 1);
+    return true;
+};
+
+
+RandomizedSet.prototype.remove = function(val) {
+    if (!this.map.has(val)) return false;
+    
+    const idx = this.map.get(val);
+    
+    [this.array[idx], this.array[this.array.length - 1]] = [this.array[this.array.length - 1], this.array[idx]];
+    this.array.pop();
+    this.map.set(this.array[idx], idx)
+    this.map.delete(val);
+    return true;
+};
+
+
+RandomizedSet.prototype.getRandom = function() {
+    const randomIdx = Math.floor(Math.random() * this.array.length);
+    return this.array[randomIdx]
+};
+
