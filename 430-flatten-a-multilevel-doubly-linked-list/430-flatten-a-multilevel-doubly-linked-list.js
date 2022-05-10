@@ -12,7 +12,7 @@
  * @param {Node} head
  * @return {Node}
  */
-var flatten = function(head) {    
+var flatten = function(head) {
     let curr = head;
     const stack = [];
     while (curr !== null) {
@@ -21,14 +21,12 @@ var flatten = function(head) {
             curr.next = curr.child;
             curr.next.prev = curr;
             curr.child = null;
-        }
-        if (curr.next === null && stack.length) {
+        } else if (curr.next === null && stack.length) {
             curr.next = stack.pop();
             curr.next.prev = curr;
         }
-        curr = curr.next;
         
+        curr = curr.next;
     }
-    
     return head;
 };
