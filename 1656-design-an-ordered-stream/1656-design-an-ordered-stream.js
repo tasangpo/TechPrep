@@ -14,9 +14,9 @@ var OrderedStream = function(n) {
 OrderedStream.prototype.insert = function(idKey, value) {
     this.stream[idKey] = value;
     const output = [];
-    while (this.stream[this.current] !== undefined) {
+    while (this.stream[this.current]) {
         output.push(this.stream[this.current]);
-        this.current++;
+        this.current += 1;
     }
     return output;
 };
