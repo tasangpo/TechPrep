@@ -13,20 +13,27 @@
  * @return {Node}
  */
 var flatten = function(head) {
-    let curr = head;
-    const stack = [];
-    while (curr !== null) {
+    if (head === null) return null
+    const stack = [ head ];
+    let prev = null;
+    while (stack.length) {
+        let curr = stack.pop();
+        if (curr.next) stack.push(curr.next);
+        if (curr.child) stack.push(curr.child);
+        
         if (curr.child) {
-            if (curr.next) stack.push(curr.next);
             curr.next = curr.child;
-            curr.next.prev = curr;
+            curr.child.prev = curr;
             curr.child = null;
-        } else if (curr.next === null && stack.length) {
-            curr.next = stack.pop();
-            curr.next.prev = curr;
+        } else {
+            if (prev) prev.next = curr;
+            curr.prev = prev;
         }
         
+        prev = curr;
         curr = curr.next;
+        
     }
+    
     return head;
 };
