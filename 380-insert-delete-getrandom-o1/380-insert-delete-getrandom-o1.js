@@ -1,7 +1,7 @@
 
 var RandomizedSet = function() {
     this.map = new Map();
-    this.nums = [];
+    this.array = new Array();
 };
 
 /** 
@@ -10,9 +10,10 @@ var RandomizedSet = function() {
  */
 RandomizedSet.prototype.insert = function(val) {
     if (this.map.has(val)) return false;
-    this.nums.push(val);
-    this.map.set(val, this.nums.length - 1);
+    this.array.push(val);
+    this.map.set(val, this.array.length - 1);
     return true;
+    
 };
 
 /** 
@@ -21,23 +22,20 @@ RandomizedSet.prototype.insert = function(val) {
  */
 RandomizedSet.prototype.remove = function(val) {
     if (!this.map.has(val)) return false;
-    const idx = this.map.get(val);
-    [this.nums[idx], this.nums[this.nums.length - 1]] = [this.nums[this.nums.length - 1], this.nums[idx]];
-    this.nums.pop();
-    this.map.set(this.nums[idx], idx);
+    let idx = this.map.get(val);
     this.map.delete(val);
+    [this.array[idx], this.array[this.array.length - 1]] = [this.array[this.array.length - 1], this.array[idx]];
+    this.array.pop();
+    this.map.set(this.array[idx], idx);
     return true;
-    
-
 };
 
 /**
  * @return {number}
  */
 RandomizedSet.prototype.getRandom = function() {
-    const random = Math.floor(Math.random() * this.nums.length);
-    return this.nums[random];
-    
+    const random = Math.floor(Math.random() * this.array.length);
+    return this.array[random];
 };
 
 /** 
