@@ -24,10 +24,8 @@ var connect = function(root) {
             nodes[i].next = nodes[i + 1] || null;
             if (nodes[i].left) newNodes.push(nodes[i].left);
             if (nodes[i].right) newNodes.push(nodes[i].right);
-        };
-        
-        if (newNodes.length) queue.push(newNodes);
-        
+        }
+        if (newNodes.length) queue.push(newNodes);    
     };
     
     return root;
