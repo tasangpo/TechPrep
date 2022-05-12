@@ -11,35 +11,30 @@
  * @return {number[][]}
  */
 var verticalOrder = function(root) {
-    if (root === null) return [];
-    
-    const map = {};                 // {0: [3, 15], -1: [9], 1: [20], 2: [7]}
-    const queue = [ [root, 0] ];        // [ [9, -1], [20, 1] ]
+    if (root === null) return []
+    const map = {};
+    const queue = [ [root, 0] ];
     let min = 0;
     let max = 0;
     
     while (queue.length) {
-        const len = queue.length;               // len = 2
-        for (let i = 0; i < len; i++) { 
-            const [node, col] = queue.shift();      // [20, 1]
+        const len = queue.length;
+        
+        for (let i = 0; i < len; i++) {
+            const [node, col] = queue.shift();
+            min = Math.min(col, min);
+            max = Math.max(col, max);
             
-            min = Math.min(min, col);               // min = -1
-            max = Math.max(max, col);               // max = 1;
+            if (!(col in map)) map[col] = [];
+            map[col].push(node.val);
             
-            
-            if (!map[col]) {
-                map[col] = [node.val];
-            } else {
-                map[col].push(node.val)
-            }
-            
-            if (node.left) queue.push([node.left, col - 1]);   // [15, 0]     
-            if (node.right) queue.push([node.right, col + 1]);       // [7, 2]   
+            if (node.left) queue.push([node.left, col - 1]);
+            if (node.right) queue.push([node.right, col + 1]);
         }
-    };
+    }
     const output = [];
     for (let i = min; i <= max; i++) {
-        if (map[i]) output.push(map[i]);
+        if (i in map) output.push(map[i]);
     }
     return output;
 };
