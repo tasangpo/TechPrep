@@ -22,8 +22,8 @@ var verticalOrder = function(root) {
         
         for (let i = 0; i < len; i++) {
             const [node, col] = queue.shift();
-            min = Math.min(col, min);
-            max = Math.max(col, max);
+            min = col < min ? col : min;
+            max = col > max ? col : max;
             
             if (!(col in map)) map[col] = [];
             map[col].push(node.val);
