@@ -15,9 +15,9 @@
 var connect = function(root) {
     if (root === null) return null;
     
-    const queue = [ [root] ];
-    while (queue.length) {
-        const nodes = queue.pop();
+    const stack = [ [root] ];
+    while (stack.length) {
+        const nodes = stack.pop();
         const newNodes = [];
         
         for (let i = 0; i < nodes.length; i++) {
@@ -25,7 +25,7 @@ var connect = function(root) {
             if (nodes[i].left) newNodes.push(nodes[i].left);
             if (nodes[i].right) newNodes.push(nodes[i].right);
         }
-        if (newNodes.length) queue.push(newNodes);    
+        if (newNodes.length) stack.push(newNodes);    
     };
     
     return root;
