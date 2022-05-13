@@ -2,24 +2,34 @@
  * @param {string} digits
  * @return {string[]}
  */
+
+const phone = {
+    2: 'abc',
+    3: 'def',
+    4: 'ghi',
+    5: 'jkl',
+    6: 'mno',
+    7: 'pqrs',
+    8: 'tuv',
+    9: 'wxyz'
+}
+
 var letterCombinations = function(digits) {
-    if (!digits.length) return [];
-    const combinations = [];
+    if (!digits) return [];
     
-    generateCombos(0, digits, combinations, []);
-    
-    return combinations;
+    const combos = [];
+    generateCombos(0, digits, combos, curr=[]);
+    return combos;
 };
 
-
-const generateCombos = (i, digits, combinations, curr) => {
+const generateCombos = (i, digits, combos, curr) => {
     if (i === digits.length) {
-        combinations.push(curr.join(''));
+        combos.push(curr.join(''));
         return;
     }
-    const phone = {2: 'abc', 3: 'def', 4: 'ghi', 5: 'jkl', 6: 'mno', 7: 'pqrs', 8: 'tuv', 9: 'wxyz'};
     
     for (const char of phone[digits[i]]) {
-        generateCombos(i + 1, digits, combinations, [...curr, char])   
+        generateCombos(i + 1, digits, combos, [...curr, char])
     }
 }
+
