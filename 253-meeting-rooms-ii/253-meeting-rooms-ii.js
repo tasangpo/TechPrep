@@ -14,11 +14,9 @@ var minMeetingRooms = function(intervals) {
     while (startIdx < intervals.length) {
         if (startTimes[startIdx] < endTimes[endIdx]) {
             count++;
-        } else if (startTimes[startIdx] > endTimes[endIdx]) {
+        } else if (startTimes[startIdx] >= endTimes[endIdx]) {
             endIdx++;
-        } else {
-            endIdx++;
-        }
+        } 
         startIdx++;
     }
     return count;
