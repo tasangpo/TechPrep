@@ -2,20 +2,23 @@
  * @param {number[][]} intervals
  * @return {number}
  */
-var minMeetingRooms = function(intervals) {
-    intervals.sort((a, b) => a[0] - b[0]);
+var minMeetingRooms = function(intervals) {                         
+    const startTimes = intervals.map(int => int[0]).sort((a, b) => a - b);      // [0, 5, 15]
+    const endTimes = intervals.map(int => int[1]).sort((a, b) => a - b);        // [10, 20, 30]
     
-    const meetingEnd = [intervals[0][1]];
+    let startIdx = 0;
+    let endIdx = 0;
+    let count = 0;
     
-    for (let i = 1; i < intervals.length; i++) {
-        const [start, end] = intervals[i];
-        const earliestEnd = Math.min(...meetingEnd);
-        if (start < earliestEnd) {
-            meetingEnd.push(end);
+    while (startIdx < intervals.length) {
+        if (startTimes[startIdx] < endTimes[endIdx]) {
+            count++;
         } else {
-            meetingEnd[meetingEnd.indexOf(earliestEnd)] = end;
+            endIdx++;
         }
+        
+        startIdx++;
     }
     
-    return meetingEnd.length;
+    return count;
 };
