@@ -4,17 +4,16 @@
  * @return {number}
  */
 var minSteps = function(s, t) {
-    let count = 0;
     const obj = {};
-    
     for (const char of s) {
-        obj[char] = obj[char] ? obj[char] + 1 : 1;
+        if (!(char in obj)) obj[char] = 0;
+        obj[char]++;
     }
-    
     for (const char of t) {
-        if (obj[char]) obj[char]--;
+        if (obj[char]) {
+            obj[char]--;
+        }
     }
     
-    for (const key in obj) count += obj[key];
-    return count;
+    return Object.values(obj).reduce((acc, el) => acc + el);
 };
