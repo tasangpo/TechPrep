@@ -13,13 +13,15 @@
  * @return {Node}
  */
 var flatten = function(head) {
+    if (head === null) return null;
+    
     let curr = head;
     const stack = [];
     while (curr !== null) {
         if (curr.child) {
             if (curr.next) stack.push(curr.next);
             curr.next = curr.child;
-            curr.child.prev = curr;
+            curr.next.prev = curr;
             curr.child = null;
         } else if (curr.next === null && stack.length) {
             curr.next = stack.pop();
