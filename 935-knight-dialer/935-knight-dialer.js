@@ -1,29 +1,46 @@
-const knightDialer = n => {
-    let dpp = Array(10).fill( 0 )
-    let dpn = Array(10).fill( 1 )
-    const mod = 10 ** 9 + 7
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var knightDialer = function(n) {
+    let count = 0;
+    const mod = 10**9 + 7;
+    const memo = new Set();
     
-    for ( let count = 1; count < n; count++ ) {
-        const hold = dpp
-        dpp = dpn
-        dpn = hold.fill( 0 )
-
-        for ( let digit = 0; digit <= 9; digit++ )
-            moves[ digit ].forEach( move => dpn[ digit ] += dpp[ move ] % mod )
+    for (let r = 0; r < 4; r++) {
+        for (let c = 0; c < 3; c++) {
+            count += explore(n, r, c, memo);
+        }
     }
+    
+    return count % mod;
+};
 
-    return dpn.reduce( ( a, x ) => a + x, 0 ) % mod
+const explore = (n, r, c, memo) => {
+    if (!isValidPos(r, c)) return 0;
+    if (n === 1) return 1;  
+    
+    const key = r + ',' + c + ',' + n;
+    if (key in memo) return memo[key];
+    
+    const deltas = [[2, 1], [2, -1], [1, 2], [1, -2], [-1, 2], [-1, -2], [-2, 1], [-2, -1]];
+    let count = 0;
+    for (const [deltaRow, deltaCol] of deltas) {
+        const neighborRow = r + deltaRow;
+        const neighborCol = c + deltaCol;
+        count += explore(n - 1, neighborRow, neighborCol, memo);
+    }
+    const mod = 10**9 + 7;
+    memo[key] = count % mod;
+     return memo[key];
+};
+
+
+const isValidPos = (r, c) => {
+    const rowInbound = 0 <= r && r < 4;
+    const colInbound = 0 <= c && c < 3;
+    const validPos = !((r == 3 && c === 0) || (r === 3 && c === 2));
+    
+    return rowInbound && colInbound && validPos;
 }
 
-const moves = {
-    0: [ 4, 6 ],
-    1: [ 6, 8 ],
-    2: [ 7, 9 ],
-    3: [ 4, 8 ],
-    4: [ 0, 3, 9 ],
-    5: [],
-    6: [ 0, 1, 7 ],
-    7: [ 2, 6 ],
-    8: [ 1, 3 ],
-    9: [ 2, 4 ],
-}
