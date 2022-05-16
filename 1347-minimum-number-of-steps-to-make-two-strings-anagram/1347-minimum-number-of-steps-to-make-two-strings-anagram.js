@@ -6,9 +6,11 @@
 var minSteps = function(s, t) {
     let count = 0;
     const obj = {};
+    
     for (const char of s) {
         obj[char] = obj[char] ? obj[char] + 1 : 1;
     }
+    
     for (const char of t) {
         if (obj[char]) obj[char]--;
     }
