@@ -3,20 +3,19 @@
  * @return {number}
  */
 var minMeetingRooms = function(intervals) {
-    intervals.sort((a,b) => a[0] - b[0]);
+    intervals.sort((a, b) => a[0] - b[0]);
     
-    const meetings = [intervals[0][1]]; // [30, 20];
+    const meetingEnd = [intervals[0][1]];
     
     for (let i = 1; i < intervals.length; i++) {
-        const earliestEnd = Math.min(...meetings);  // 10
-        const [start, end] = intervals[i];      // 15, 20
-        
+        const [start, end] = intervals[i];
+        const earliestEnd = Math.min(...meetingEnd);
         if (start < earliestEnd) {
-            meetings.push(end);
+            meetingEnd.push(end);
         } else {
-            meetings[meetings.indexOf(earliestEnd)] = end;
-        }   
+            meetingEnd[meetingEnd.indexOf(earliestEnd)] = end;
+        }
     }
     
-    return meetings.length;
+    return meetingEnd.length;
 };
