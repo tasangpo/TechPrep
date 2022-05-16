@@ -2,22 +2,26 @@
  * @param {number[][]} graph
  * @return {number[][]}
  */
-var allPathsSourceTarget = function(graph, i = 0) {
-    const paths = [];
-    traverse(i, graph, paths, []);
-    return paths;
+var allPathsSourceTarget = function(graph) {
+    const all = [];
+    
+    findPaths(0, graph, all, []);
+    
+    return all;
 };
 
-const traverse = (i, graph, paths, path) => {
-    path.push(i);
+
+const findPaths = (i, graph, all, curr) => {
+    curr.push(i);
     if (i === graph.length - 1) {
-        paths.push(path);
+        all.push(curr);
         return;
     }
     
-    for (let neighbor of graph[i]) {
-        traverse(neighbor, graph, paths, [...path])
+    for (const neighbor of graph[i]) {
+        findPaths(neighbor, graph, all, [...curr])
     }
     
-    return paths;
+    
+    return all;
 }
