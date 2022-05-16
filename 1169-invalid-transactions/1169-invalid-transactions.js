@@ -5,26 +5,29 @@
 var invalidTransactions = function(transactions) {
     const transObj = {};
     for (let i = 0; i < transactions.length; i++) {
-        const [name, time, price, location] = transactions[i].split(',');
-        transObj[i] = {name: name, time: time, price: price, location: location, invalid: false};
+        const [name, time, amount, city] = transactions[i].split(',');
+        transObj[i] = {name, time, amount, city, invalid: false};
+        if (amount > 1000) transObj[i].invalid = true;
     }
-    
+        
     for (let i = 0; i < transactions.length; i++) {
-        const prev = transObj[i];
-        if (prev.price > 1000) prev.invalid = true;
+        const prevTrans = transObj[i];
         for (let j = i + 1; j < transactions.length; j++) {
-            const curr = transObj[j];
-            if (prev.name === curr.name && prev.location !== curr.location && Math.abs(prev.time - curr.time) <= 60) {
-                prev.invalid = true;
-                curr.invalid = true;
+            const currTrans = transObj[j];
+            const timeDifferntial = Math.abs(currTrans.time - prevTrans.time)
+            if (prevTrans.name === currTrans.name && prevTrans.city !== currTrans.city && timeDifferntial <= 60 ) {
+                transObj[i].invalid = true;
+                transObj[j].invalid = true;
             }
         }
     }
+
     
     const invalids = [];
-    for (const i in transObj) {
-        if (transObj[i].invalid === true) invalids.push(transactions[i]);
-    }
-    return invalids;
     
+    for (let key in transObj) {
+        if (transObj[key].invalid === true) invalids.push(transactions[key]);
+    }
+    
+    return invalids;
 };
