@@ -3,31 +3,26 @@
  * @return {string[]}
  */
 var invalidTransactions = function(transactions) {
-    const transObj = {};
+    const obj = {};
     for (let i = 0; i < transactions.length; i++) {
-        const [name, time, amount, city] = transactions[i].split(',');
-        transObj[i] = {name, time, amount, city, invalid: false};
-        if (amount > 1000) transObj[i].invalid = true;
-    }
-        
+        const [name, time, amount, location] = transactions[i].split(',');
+        obj[i] = {name, time, amount, location, invalid: false};
+        if (amount > 1000) obj[i].invalid = true;
+    } 
+    
     for (let i = 0; i < transactions.length; i++) {
-        const prevTrans = transObj[i];
+        const prevTransaction = obj[i];
         for (let j = i + 1; j < transactions.length; j++) {
-            const currTrans = transObj[j];
-            const timeDifferntial = Math.abs(currTrans.time - prevTrans.time)
-            if (prevTrans.name === currTrans.name && prevTrans.city !== currTrans.city && timeDifferntial <= 60 ) {
-                transObj[i].invalid = true;
-                transObj[j].invalid = true;
+            const currTransaction = obj[j];
+            
+            if (prevTransaction.name === currTransaction.name && prevTransaction.location !== currTransaction.location && Math.abs(currTransaction.time - prevTransaction.time) <= 60) {
+                prevTransaction.invalid = true;
+                currTransaction.invalid = true;
             }
         }
     }
-
     
-    const invalids = [];
-    
-    for (let key in transObj) {
-        if (transObj[key].invalid === true) invalids.push(transactions[key]);
-    }
-    
-    return invalids;
+    const output = [];
+    for (const i in obj) if (obj[i].invalid=== true) output.push(transactions[i]);
+    return output;
 };
