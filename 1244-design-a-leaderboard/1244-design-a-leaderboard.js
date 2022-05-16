@@ -1,6 +1,6 @@
 
 var Leaderboard = function() {
-    this.board = {};  // {1: 0, 2: 0, 3:84, 4: 6, 5:89, 6:31, 7:7, 8:1, 9:98, 10:42}
+    this.board = {};
 };
 
 /** 
@@ -18,7 +18,7 @@ Leaderboard.prototype.addScore = function(playerId, score) {
  * @return {number}
  */
 Leaderboard.prototype.top = function(K) {
-    const score = Object.values(this.board).sort((a, b) => b- a);
+    const score = Object.values(this.board).sort((a, b) => b - a);
     let total = 0;
     for (let i = 0; i < K; i++) {
         total += score[i];
@@ -31,7 +31,7 @@ Leaderboard.prototype.top = function(K) {
  * @return {void}
  */
 Leaderboard.prototype.reset = function(playerId) {
-    this.board[playerId] = 0;
+    delete this.board[playerId];
 };
 
 /** 
