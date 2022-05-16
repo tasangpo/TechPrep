@@ -1,7 +1,7 @@
 
 var RandomizedSet = function() {
-    this.map = new Map();
-    this.array = new Array();
+    this.map = new Map();               
+    this.nums = new Array();
 };
 
 /** 
@@ -10,10 +10,10 @@ var RandomizedSet = function() {
  */
 RandomizedSet.prototype.insert = function(val) {
     if (this.map.has(val)) return false;
-    this.array.push(val);
-    this.map.set(val, this.array.length - 1);
-    return true;
+    this.nums.push(val);                                // [2]
+    this.map.set(val, this.nums.length - 1);            // {2: 0}
     
+    return true;
 };
 
 /** 
@@ -22,11 +22,14 @@ RandomizedSet.prototype.insert = function(val) {
  */
 RandomizedSet.prototype.remove = function(val) {
     if (!this.map.has(val)) return false;
-    let idx = this.map.get(val);
+    
+    const idx = this.map.get(val); // 0;
+    [this.nums[idx], this.nums[this.nums.length - 1]] = [this.nums[this.nums.length - 1], this.nums[idx]];
+    this.nums.pop();
     this.map.delete(val);
-    [this.array[idx], this.array[this.array.length - 1]] = [this.array[this.array.length - 1], this.array[idx]];
-    this.array.pop();
-    this.map.set(this.array[idx], idx);
+    
+    this.map.set(this.nums[idx], idx);
+    
     return true;
 };
 
@@ -34,8 +37,8 @@ RandomizedSet.prototype.remove = function(val) {
  * @return {number}
  */
 RandomizedSet.prototype.getRandom = function() {
-    const random = Math.floor(Math.random() * this.array.length);
-    return this.array[random];
+    const randomIdx = Math.floor(Math.random() * this.nums.length);
+    return this.nums[randomIdx];
 };
 
 /** 
