@@ -10,16 +10,14 @@ var generateParenthesis = function(n) {
     return all;
 };
 
+
 const generate = (i, j, n, all, curr) => {
     if (i === n && j === n) {
         all.push(curr.join(''));
+        return;
     }
     
-    if (j < i) {
-        generate(i, j + 1, n, all, [...curr, ')']);
-    }
+    if (j < i) generate(i, j + 1, n, all, [...curr, ')']);
+    if (i < n) generate(i + 1, j, n, all, [...curr, '(']);
     
-    if (i < n) {
-        generate(i + 1, j, n, all, [...curr, '(']);
-    }
 }
