@@ -6,9 +6,8 @@ var subsets = function(nums) {
     if (nums.length === 0) return [[]];
     
     const first = nums[0];
-    const withoutFirst = subsets(nums.slice(1));
-    const withFirst = [];
-    for (const sub of withoutFirst) withFirst.push([first, ...sub]);
+    const without = subsets(nums.slice(1));
+    const withFirst = without.map(arr => [first, ...arr]);
     
-    return withFirst.concat(withoutFirst);
+    return withFirst.concat(without);
 };
