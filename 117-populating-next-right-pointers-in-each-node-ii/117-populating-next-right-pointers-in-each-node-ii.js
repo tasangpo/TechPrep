@@ -13,20 +13,18 @@
  * @return {Node}
  */
 var connect = function(root) {
-    if (root === null) return null;
+    if (!root) return null;
+  const stack = [ [root] ];
     
-    const stack = [ [root] ];
-    while (stack.length) {
-        const nodes = stack.pop();
-        const newNodes = [];
-        
-        for (let i = 0; i < nodes.length; i++) {
-            nodes[i].next = nodes[i + 1] || null;
-            if (nodes[i].left) newNodes.push(nodes[i].left);
-            if (nodes[i].right) newNodes.push(nodes[i].right);
-        }
-        if (newNodes.length) stack.push(newNodes);    
-    };
-    
+   while (stack.length) {
+       const nodes = stack.pop();
+       const newNodes = [];
+       for (let i = 0; i < nodes.length; i++)  {
+           nodes[i].next = nodes[i + 1] || null;
+           if (nodes[i].left) newNodes.push(nodes[i].left);
+           if (nodes[i].right) newNodes.push(nodes[i].right);
+       }
+       if (newNodes.length) stack.push(newNodes);
+   }
     return root;
 };
