@@ -13,31 +13,29 @@
  * @return {string}
  */
 var getDirections = function(root, startValue, destValue) {
-    let start;
-    const dfs = node => {
-        if (!node) retunr;
-        if (node.left) {
-            node.left.parent = node;
-            dfs(node.left);
+    const recurse = (currNode, target, str) => {
+        if (!currNode) {
+            return null;
         }
-        if (node.right) {
-            node.right.parent = node;
-            dfs(node.right);
+        if (currNode.val === target) {
+            return str;
         }
-        if (node.val === startValue) start = node;
-    }
-    dfs(root);
+        
+        return recurse(currNode.left, target, str + 'L') ||
+            recurse(currNode.right, target, str + 'R');
+    };
     
-    const queue = [ [start, ''] ];
-    while (queue.length) {
-        const [node, path] = queue.shift();
-        if (node.visited) continue;
-        if (node.val === destValue) return path;
-        node.visited = true;
-        if (node.right && !node.right.visited) queue.push( [node.right, path + 'R'] );
-        if (node.left && !node.left.visited) queue.push( [node.left, path + 'L'] );
-        if (node.parent && !node.parent.visited) queue.push( [node.parent, path + 'U'] );
+    const start = recurse(root, startValue, '');
+    const dest = recurse(root, destValue, '');
+	
+    let pointer = 0;
+    // find the common ancestory
+    while (pointer < start.length) {
+        if (start[pointer] !== dest[pointer]) {
+            break;   
+        }
+        pointer++;
     }
     
-    
+    return 'U'.repeat(start.length - pointer) + dest.substring(pointer);
 };
