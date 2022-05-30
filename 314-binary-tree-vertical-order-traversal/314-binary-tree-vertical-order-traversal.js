@@ -12,26 +12,26 @@
  */
 var verticalOrder = function(root) {
     if (root === null) return [];
-    const queue = [ [root, 0] ];
-    const map = {};
+    const cols = {};
     
     let min = 0;
     let max = 0;
-    
+    const queue = [ [root, 0] ]
     while (queue.length) {
-        const [node, col] = queue.shift();
-        if (!(col in map)) map[col] = [];
-        map[col].push(node.val);
+        const [curr, col] = queue.shift();
+        if (!(col in cols)) cols[col] = [];
+        cols[col].push(curr.val);
         
         min = col < min ? col : min;
         max = col > max ? col : max;
-        if (node.left) queue.push([node.left, col - 1]);
-        if (node.right) queue.push([node.right, col + 1]);
+        if (curr.left) queue.push([curr.left, col - 1]);
+        if (curr.right) queue.push([curr.right, col + 1]);
+        
     }
     
     const output = [];
     for (let i = min; i <= max; i++) {
-        if (i in map) output.push(map[i]);
+        output.push(cols[i]);
     }
     return output;
     
